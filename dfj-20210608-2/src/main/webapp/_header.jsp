@@ -1,0 +1,551 @@
+<!-- ==================  Navigation (main menu) ================== -->
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<script type="text/javascript">
+	$(function() {
+		// Main navigation & mega menu
+		// ----------------------------------------------------------------
+
+		// Global menu variables
+
+		var objSearch = $('.search-wrapper'), objLogin = $('.login-wrapper'), objCart = $('.cart-wrapper'), objMenu = $('.floating-menu'), objMenuLink = $('.floating-menu a'), $search = $('.open-search'), $login = $('.open-login'), $cart = $('.open-cart'), $menu = $('.open-menu'), $openDropdown = $('.open-dropdown'), $close = $('.close-menu'), $settingsItem = $('.nav-settings .nav-settings-list li');
+
+		// Open/close login
+
+		$login.on('click', function() {
+			toggleOpen($(this));
+			objLogin.toggleClass('open');
+			closeSearch();
+			closeCart();
+		});
+
+		// Open/close search bar
+
+		$search.on('click', function() {
+			toggleOpen($(this));
+			objSearch.toggleClass('open');
+			objSearch.find('input').focus();
+			closeLogin();
+			closeCart();
+		});
+
+		// Open/close cart
+
+		$cart.on('click', function() {
+			toggleOpen($(this));
+			objCart.toggleClass('open');
+			closeLogin();
+			closeSearch();
+		});
+
+		// Settings language & currency dropdown
+
+		$settingsItem.on('click', function() {
+			var $value = $(this).closest('.nav-settings').find(
+					'.nav-settings-value');
+			$value.text($(this).text());
+		});
+
+		// Mobile menu open/close
+
+		$menu.on('click', function() {
+			objMenu.addClass('expanded');
+			closeSearch();
+			closeLogin();
+			closeCart();
+		});
+
+		// Floating menu hyperlink
+		if ($('nav').hasClass('navbar-single-page')) {
+			objMenuLink.on('click', function() {
+				objMenu.removeClass('expanded');
+			});
+		}
+
+		// Open dropdown/megamenu
+
+		$openDropdown.on('click', function(e) {
+
+			e.preventDefault();
+
+			var liParent = $(this).parent().parent(), liDropdown = liParent
+					.find('.navbar-dropdown');
+
+			liParent.toggleClass('expanded');
+
+			if (liParent.hasClass('expanded')) {
+				liDropdown.slideDown();
+			} else {
+				liDropdown.slideUp();
+			}
+		});
+
+		// Close menu (mobile)
+
+		$close.on('click', function() {
+			$('nav').find('.expanded').removeClass('expanded');
+			$('nav').find('.navbar-dropdown').slideUp();
+		});
+
+		// Global functions
+
+		function toggleOpen(el) {
+			$(el).toggleClass('open');
+		}
+
+		function closeSearch() {
+			objSearch.removeClass('open');
+			$search.removeClass('open');
+		}
+		function closeLogin() {
+			objLogin.removeClass('open');
+			$login.removeClass('open');
+		}
+		function closeCart() {
+			objCart.removeClass('open');
+			$cart.removeClass('open');
+		}
+
+		// Sticky header
+		// ----------------------------------------------------------------
+
+		var navbarFixed = $('nav.navbar-fixed');
+
+		// When reload page - check if page has offset
+		if ($(document).scrollTop() > 94) {
+			navbarFixed.addClass('navbar-sticked');
+		}
+		// Add sticky menu on scroll
+		$(document).on('bind ready scroll', function() {
+			var docScroll = $(document).scrollTop();
+			if (docScroll >= 10) {
+				navbarFixed.addClass('navbar-sticked');
+			} else {
+				navbarFixed.removeClass('navbar-sticked');
+			}
+		});
+
+		var navHeight = $('nav').height();
+
+		if ($(".owl-slider").hasClass('owl-slider-fullscreen')) {
+			$('.header-content .item').height(
+					$(window).height() - navHeight - 50);
+		}
+
+	});
+</script>
+
+<!-- ======================== Navigation ======================== -->
+
+<nav>
+
+	<div class="container">
+
+		<a href="index.jsp" class="logo"><img
+			src="assets/images/divano-logo.svg" alt="" width="130" height="55" /></a>
+
+		<!-- ==========  Top navigation ========== -->
+
+		<div class="navigation navigation-top clearfix">
+			<ul>
+				<!--add active class for current page-->
+				<li class="left-side"><a href="index.jsp" class="logo-icon"><img
+						src="assets/images/divano-logo.svg" alt="Alternate Text"
+						width="150" height="34" /></a></li>
+				<li class="left-side"><a href="email-template.jsp">Email
+						template</a></li>
+				<li class="left-side"><a href="shortcodes.jsp">Shortcodes</a></li>
+				<li><a href="javascript:void(0);" class="open-login"><i
+						class="icon icon-user"></i></a></li>
+				<li><a href="javascript:void(0);" class="open-search"><i
+						class="icon icon-magnifier"></i></a></li>
+				<li><a href="javascript:void(0);" class="open-cart"><i
+						class="icon icon-cart"></i> </a></li>
+			</ul>
+		</div>
+
+		<!-- ==========  Main navigation ========== -->
+
+		<div class="navigation navigation-main">
+			<a href="#" class="open-login"><i class="icon icon-user"></i></a> <a
+				href="#" class="open-search"><i class="icon icon-magnifier"></i></a>
+			<a href="#" class="open-cart"><i class="icon icon-cart"></i> <span>4</span></a>
+			<a href="#" class="open-menu"><i class="icon icon-menu"></i></a>
+
+			<div class="floating-menu">
+				<!--mobile toggle menu trigger-->
+				<div class="close-menu-wrapper">
+					<span class="close-menu"><i class="icon icon-cross"></i></span>
+				</div>
+				<ul>
+					<li><a href="#">Home <span class="open-dropdown"><i
+								class="fa fa-angle-down"></i></span></a>
+						<div class="navbar-dropdown navbar-dropdown-single">
+							<div class="navbar-box">
+								<div class="box-full">
+									<div class="box clearfix">
+										<ul>
+											<li class="label">Homepages</li>
+											<li><a href="index.jsp">Home - Normal</a></li>
+											<li><a href="index-2.jsp">Home - Icons category</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div></li>
+					<li><a href="#">Pages <span class="open-dropdown"><i
+								class="fa fa-angle-down"></i></span></a>
+						<div class="navbar-dropdown navbar-dropdown-single">
+							<div class="navbar-box">
+								<div class="box-full">
+									<div class="box clearfix">
+										<ul>
+											<li class="label">Addons</li>
+											<li><a href="about.jsp">About us</a></li>
+											<li><a href="contact.jsp">Contact</a></li>
+											<li><a href="404.jsp">Not found 404</a></li>
+											<li><a href="login.jsp">Login & Register</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div></li>
+					<li><a href="#">Blog <span class="open-dropdown"><i
+								class="fa fa-angle-down"></i></span></a>
+						<div class="navbar-dropdown navbar-dropdown-single">
+							<div class="navbar-box">
+								<div class="box-full">
+									<div class="box clearfix">
+										<ul>
+											<li class="label">Blog categories</li>
+											<li><a href="blog-grid.jsp">Blog - grid</a></li>
+											<li><a href="blog-list.jsp">Blog - list</a></li>
+											<li><a href="blog-fullpage.jsp">Blog - fullpage</a></li>
+											<li class="label">Blog articles</li>
+											<li><a href="article.jsp">Article - single</a></li>
+											<li><a href="article-2.jsp">Article - right menu</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div></li>
+					<li><a href="#">Shop <span class="open-dropdown"><i
+								class="fa fa-angle-down"></i></span></a>
+						<div class="navbar-dropdown navbar-dropdown-single">
+							<div class="navbar-box">
+								<div class="box-full">
+									<div class="box clearfix">
+										<ul>
+											<li class="label">Products</li>
+											<li><a href="category.jsp">Product categories</a></li>
+											<li><a href="products-grid.jsp">Products grid</a></li>
+											<li><a href="products-list.jsp">Products list</a></li>
+											<li><a href="products-topbar.jsp">Products topbar</a></li>
+											<li><a href="product.jsp">Product overview</a></li>
+											<li><a href="product-2.jsp">Product overview simple</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div></li>
+					<li><a href="#">Checkout <span class="open-dropdown"><i
+								class="fa fa-angle-down"></i></span></a>
+						<div class="navbar-dropdown navbar-dropdown-single">
+							<div class="navbar-box">
+								<div class="box-full">
+									<div class="box clearfix">
+										<ul>
+											<li class="label">Checkout</li>
+											<li><a href="checkout-1.jsp">Checkout - Cart items</a></li>
+											<li><a href="checkout-2.jsp">Checkout - Delivery</a></li>
+											<li><a href="checkout-3.jsp">Checkout - Payment</a></li>
+											<li><a href="checkout-4.jsp">Checkout - Receipt</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div></li>
+					<li><a href="index.jsp">Boxmenu <span
+							class="open-dropdown"><i class="fa fa-angle-down"></i></span></a>
+						<div class="navbar-dropdown">
+							<div class="navbar-box">
+								<div class="box-lg">
+									<div class="box clearfix">
+										<div class="row">
+											<div class="col-lg-4">
+												<ul>
+													<li class="label">Living Room</li>
+													<li><a href="#">Sofas</a></li>
+													<li><a href="#">Loveseats</a></li>
+													<li><a href="#">Sectionals</a></li>
+													<li><a href="#">Chairs & Chaises</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-4">
+												<ul>
+													<li class="label">Packages</li>
+													<li><a href="#">Recliners</a></li>
+													<li><a href="#">Ottomans</a></li>
+													<li><a href="#">Cabinets</a></li>
+													<li><a href="#">Entertainment</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-4">
+												<ul>
+													<li class="label">Dining</li>
+													<li><a href="#">Dining Packages</a></li>
+													<li><a href="#">Dining Tables</a></li>
+													<li><a href="#">Dining Chairs</a></li>
+													<li><a href="#">Dining Benches</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-4">
+												<ul>
+													<li class="label">TV & Video</li>
+													<li><a href="#">TVs</a></li>
+													<li><a href="#">DVD & Blu-ray Players</a></li>
+													<li><a href="#">Home Audio & Theater</a></li>
+													<li><a href="#">TVs Accessories</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-4">
+												<ul>
+													<li class="label">Bedroom</li>
+													<li><a href="#">King Beds</a></li>
+													<li><a href="#">Queen Beds</a></li>
+													<li><a href="#">Storage Beds</a></li>
+													<li><a href="#">Daybeds & Futons</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-4">
+												<ul>
+													<li class="label">Storages</li>
+													<li><a href="#">Dressers & Chests</a></li>
+													<li><a href="#">Night Tables</a></li>
+													<li><a href="#">Mirrors</a></li>
+													<li><a href="#">Armoires</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="box-sm">
+									<div class="image">
+										<img src="assets/images/m-1.jpg" alt="Alternate Text" />
+									</div>
+									<div class="box">
+										<div class="h4">Premium quality</div>
+										<div class="clearfix">
+											<p>Homes that differ in terms of style, concept and
+												architectural solutions have been furnished by Furniture
+												Factory. These spaces tell of an international lifestyle
+												that expresses modernity, research and a creative spirit.</p>
+											<a class="btn btn-clean btn-big" href="products-grid.jsp">Shop
+												now</a>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div></li>
+
+					<li><a href="#">Megamenu <span class="open-dropdown"><i
+								class="fa fa-angle-down"></i></span></a>
+						<div class="navbar-dropdown">
+							<div class="navbar-box">
+								<div class="box-full">
+									<div class="box clearfix">
+										<div class="row">
+											<div class="col-lg-3">
+												<ul>
+													<li class="label">Packages</li>
+													<li><a href="#">Recliners</a></li>
+													<li><a href="#">Ottomans</a></li>
+													<li><a href="#">Cabinets</a></li>
+													<li><a href="#">Entertainment</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-3">
+												<ul>
+													<li class="label">Dining</li>
+													<li><a href="#">Dining Packages</a></li>
+													<li><a href="#">Dining Tables</a></li>
+													<li><a href="#">Dining Chairs</a></li>
+													<li><a href="#">Dining Benches</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-3">
+												<ul>
+													<li class="label">TV & Video</li>
+													<li><a href="#">TVs</a></li>
+													<li><a href="#">DVD & Blu-ray Players</a></li>
+													<li><a href="#">Home Audio & Theater</a></li>
+													<li><a href="#">TVs Accessories</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-3">
+												<ul>
+													<li class="label">Bedroom</li>
+													<li><a href="#">King Beds</a></li>
+													<li><a href="#">Queen Beds</a></li>
+													<li><a href="#">Storage Beds</a></li>
+													<li><a href="#">Daybeds & Futons</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-3">
+												<ul>
+													<li class="label">Storages</li>
+													<li><a href="#">Dressers & Chests</a></li>
+													<li><a href="#">Night Tables</a></li>
+													<li><a href="#">Mirrors</a></li>
+													<li><a href="#">Armoires</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-3">
+												<ul>
+													<li class="label">Office</li>
+													<li><a href="#">Desks & Hutches</a></li>
+													<li><a href="#">Office Chairs</a></li>
+													<li><a href="#">Filing Cabinets</a></li>
+													<li><a href="#">Bookcases</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-3">
+												<ul>
+													<li class="label">Floor Care</li>
+													<li><a href="#">Upright Vacuums</a></li>
+													<li><a href="#">Stick Vacuums</a></li>
+													<li><a href="#">Robotic Vacuums</a></li>
+													<li><a href="#">Handheld Vacuums</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+											<div class="col-lg-3">
+												<ul>
+													<li class="label">Kids</li>
+													<li><a href="#">Full Beds</a></li>
+													<li><a href="#">Twin Beds</a></li>
+													<li><a href="#">Chests & Dressers</a></li>
+													<li><a href="#">Baby Furniture</a></li>
+													<li class="more"><a href="#"><i
+															class="icon icon-chevron-right"></i> More</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div></li>
+
+					<li class="nav-settings"><a href="javascript:void(0);"><span
+							class="nav-settings-value">USD</span> <span class="open-dropdown"><i
+								class="fa fa-angle-down"></i></span></a>
+						<div class="navbar-dropdown navbar-dropdown-single">
+							<div class="navbar-box">
+								<div class="box-full">
+									<div class="box clearfix">
+										<ul class="nav-settings-list">
+											<li><a href="javascript:void(0);">USD</a></li>
+											<li><a href="javascript:void(0);">EUR</a></li>
+											<li><a href="javascript:void(0);">GBP</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div></li>
+					
+				</ul>
+			</div>
+		</div>
+
+		<!-- ==========  Search wrapper ========== -->
+
+		<div class="search-wrapper">
+			<input class="form-control" placeholder="Search..." />
+			<button class="btn btn-outline-dark btn-sm">Search now</button>
+		</div>
+
+		<!-- ==========  Login wrapper ========== -->
+
+		<div class="login-wrapper">
+			<div class="h5">Sign in</div>
+			<c:if test="${loginByr.account != null }">
+				<a>You are welcome to log in,${loginByr.account }</a>
+				<c:if test="${loginByr.account eq 'root'}">
+					<a href="/dfj-20210608-2/about.jsp"><button class="btn btn-block btn-outline-primary">About us</button></a>
+				</c:if>
+				<br>
+				<a href="/dfj-20210608-2/logout.do" class="btn btn-block btn-outline-primary">Sign out to log in</a>
+			</c:if>
+			<c:if test="${loginByr.account == null }">
+			<form action="/dfj-20210608-2/buyerLogin.do" method="post">
+				<div class="form-group">
+					<input name="account" type="account" class="form-control"
+						id="exampleInputEmail1" placeholder="Account">
+				</div>
+				<div class="form-group">
+					<input name="password" type="password" class="form-control"
+						id="exampleInputPassword1" placeholder="Password">
+				</div>
+				<div class="form-group">
+					<a href="emailforgetpassword.jsp" class="open-popup btn btn-main btn-sm">Forgot
+						password?</a> <a href="login.jsp"
+						class="open-popup btn btn-main btn-sm">Don't have an account?</a>
+				</div>
+				<button type="submit" class="btn btn-block btn-outline-primary">Submit</button>
+			</form>
+			</c:if>
+		</div>
+
+		<!-- ==========  Cart wrapper ========== -->
+
+		<div class="cart-wrapper">
+			<div class="checkout">
+				<div class="clearfix">
+
+
+					<!--cart navigation -->
+
+					<div class="cart-block-buttons clearfix">
+						<div class="row">
+							<div class="col-sm-6">
+								<a href="queryGoods.do?condition=&pageNow=1" class="btn btn-outline-info">Continue
+									shopping</a>
+							</div>
+							
+							<div class="col-sm-6 text-right">
+								<a href="queryCart.do?condition=&pageNow=1" class="btn btn-outline-warning"><span
+									class="icon icon-cart"></span> Checkout</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>

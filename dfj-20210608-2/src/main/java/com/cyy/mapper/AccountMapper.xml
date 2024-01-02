@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyy.dao.AccountMapper">
+	<select id="queryCrtSum" parameterType="int"
+		resultType="com.cyy.javabean.Account">
+		select sum(cartNum) addNum, sum(cartnum * cartprice) addAmount
+		from cart
+		where cartUserId = #{addUserId}
+	</select>
+	<select id="accountAddSave" parameterType="com.cyy.javabean.Account">
+		call p_cart_account(#{addUserId}, #{addCity}, #{addPhone}, #{addName}, #{addEmail}, #{addZip}, #{addAddr});
+		
+		
+	</select>
+</mapper>

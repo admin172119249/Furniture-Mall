@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyy.dao.GoodsMapper">
+	<select id="queryGoods" parameterType="com.cyy.javabean.SearchCondition"
+		resultType="com.cyy.javabean.Goods">
+		select *
+		from shop
+		<where>
+			<if test="condition != null">
+				shopName like #{condition}
+
+			</if>
+		</where>
+		<if test="pageNow != null">
+			limit #{beginRow}, #{pageSize}
+		</if>
+	</select>
+	<select id="queryGoodsRecordCnt" parameterType="com.cyy.javabean.SearchCondition"
+		resultType="int">
+		select count(*)
+		from shop
+		<where>
+			<if test="condition != null">
+				shopName like #{condition}
+
+			</if>
+		</where>
+	</select>
+
+
+	<select id="queryGoodsById" parameterType="java.lang.Integer"
+		resultType="com.cyy.javabean.Goods">
+		select *
+		from shop
+		where shopId = #{shopId}
+	</select>
+	
+	<insert id="goodsAdd" parameterType="com.cyy.javabean.Goods">
+		insert into shop (shopName,shopPrice,shopPic)
+		values (#{shopName}, #{shopPrice}, #{shopPic})
+	</insert>
+	
+	<update id="goodsChange" parameterType="com.cyy.javabean.Goods">
+		update shop set shopName=#{shopName},shopPrice=#{shopPrice},shopPic=#{shopPic}
+		where shopId=#{shopId }
+	</update>
+	
+	<delete id="goodsDelete" parameterType="com.cyy.javabean.Goods">
+		delete from shop
+		where shopId=#{shopId}
+	</delete>
+</mapper>

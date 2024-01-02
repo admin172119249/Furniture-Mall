@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyy.dao.CartMapper">
+	<insert id="cartSave" parameterType="com.cyy.javabean.Cart">
+		insert into cart(cartUserId, cartShopId, cartPrice, cartNum,cartPic,cartName)
+		values( #{cartUserId}, #{cartShopId}, #{cartPrice},
+		#{cartNum},#{cartPic},#{cartName})
+	</insert>
+	
+	<select id="queryCart" parameterType="com.cyy.javabean.SearchCondition"
+		resultType="com.cyy.javabean.Cart">
+		select *
+		from cart
+		
+		<if test="pageNow != null">
+			limit #{beginRow}, #{pageSize}
+		</if>
+	</select>
+	<select id="queryCartRecordCnt" parameterType="com.cyy.javabean.SearchCondition"
+		resultType="int">
+		select count(*)
+		from cart
+		
+	</select>
+	
+	<delete id="cartDelete" parameterType="com.cyy.javabean.Cart">
+		DELETE FROM cart
+		WHERE cartId = #{cartId};
+	</delete>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyy.dao.BuyerMapper">
+	<insert id="buyerRegSave" parameterType="com.cyy.javabean.Buyer">
+		insert into user (account, password,userName,usertel,useremail,useradd)
+		values (#{account}, #{password},#{userName},#{usertel},#{useremail},#{useradd})
+	</insert>
+	<select id="loginCheck" parameterType="com.cyy.javabean.Buyer"
+		resultType="com.cyy.javabean.Buyer">
+		select * from user
+		where account = #{account} and password = #{password}
+		limit 1
+	</select>
+
+	<update id="buyerChange" parameterType="com.cyy.javabean.Buyer">
+		update user 
+		set account=#{account}, password=#{password}
+		where usertel=#{usertel}
+		
+	</update>
+</mapper>
